@@ -59,21 +59,33 @@ def makecycle(T,link_point,point):
         """
         여기서는 사이클이 발생되는지 확인
         """
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
         for t_list in T:
-            u,v=t_list
-            if (point.index(u),point,index(v)) in :
+            u,v,weight=t_list
+            """시작점을 가지고 끝점과 이어지는 선분이 T에 있는지 확인"""
+            union=list(set(link_point[point.index(u)])&set(link_point[point.index(v)]))
+            if len(union)>1:
+                print(u, v, "//", (union[0], u), (union[0], v), (union[1], u), (union[1], v))
 
-        """for path in [T[i][0] for i in range(2, len(T))]:
-            path.split("-")
-            s1_index=point.index(path[0])
-            s2_index=point.index(path[2])
-            #link_point[s1_index].index(path[0])
-            #link_point[s2_index].index(path[2])
-            print(path[0],"//",path[2])
-            while(link_point[s1_index].index(path[0])):
-                pass
-            while (link_point[s1_index].index(path[2])):
-                pass """
+                u,v,weight=T[len(T)-1]
+                count=0
+                print("@@",(u,v))
+                if (u,v) == (union[0], u) or (u,v) == (u,union[0]):
+                    count = count + 1
+                    print((u,v),"==",(union[0], u),"///",(u,v),"==",(u,union[0]))
+                if (u,v) == (union[0], v) or (u,v) == (v,union[0]):
+                    count = count + 1
+                    print((u, v), "==", (union[0], v), "///", (u, v), "==", (v, union[0]))
+                if (u,v) == (union[1], u) or (u,v) == (u,union[1]):
+                    count = count + 1
+                    print((u, v), "==", (union[1], u), "///", (u, v), "==", (u, union[1]))
+                if (u,v) == (union[1], v) or (u,v) == (v,union[1]):
+                    count = count + 1
+                    print((u, v), "==", (union[1], v), "///", (u, v), "==", (v, union[1]))
+                if count==2:
+                    print("사이클임")
+            else :
+                print(u, v, "//", (union[0], u), (union[0], v))
     return
 
 
