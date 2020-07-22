@@ -64,28 +64,41 @@ def makecycle(T,link_point,point):
             u,v,weight=t_list
             """시작점을 가지고 끝점과 이어지는 선분이 T에 있는지 확인"""
             union=list(set(link_point[point.index(u)])&set(link_point[point.index(v)]))
+            print(u, v, "//", union)
             if len(union)>1:
-                print(u, v, "//", (union[0], u), (union[0], v), (union[1], u), (union[1], v))
-
                 u,v,weight=T[len(T)-1]
                 count=0
                 print("@@",(u,v))
-                if (u,v) == (union[0], u) or (u,v) == (u,union[0]):
-                    count = count + 1
-                    print((u,v),"==",(union[0], u),"///",(u,v),"==",(u,union[0]))
-                if (u,v) == (union[0], v) or (u,v) == (v,union[0]):
-                    count = count + 1
-                    print((u, v), "==", (union[0], v), "///", (u, v), "==", (v, union[0]))
-                if (u,v) == (union[1], u) or (u,v) == (u,union[1]):
-                    count = count + 1
-                    print((u, v), "==", (union[1], u), "///", (u, v), "==", (u, union[1]))
-                if (u,v) == (union[1], v) or (u,v) == (v,union[1]):
-                    count = count + 1
-                    print((u, v), "==", (union[1], v), "///", (u, v), "==", (v, union[1]))
-                if count==2:
-                    print("사이클임")
-            else :
-                print(u, v, "//", (union[0], u), (union[0], v))
+                for t_list in T:
+                    tu,tv,tweight=t_list
+                    if (tu,tv) == (union[0], u) or (tu,tv) == (u,union[0]):
+                        count = count + 1
+                        print((u,v),"==",(union[0], u),"///",(u,v),"==",(u,union[0]))
+                    if (tu,tv) == (union[0], v) or (tu,tv) == (v,union[0]):
+                        count = count + 1
+                        print((u, v), "==", (union[0], v), "///", (u, v), "==", (v, union[0]))
+                    if (tu,tv) == (union[1], u) or (tu,tv) == (u,union[1]):
+                        count = count + 1
+                        print((u, v), "==", (union[1], u), "///", (u, v), "==", (u, union[1]))
+                    if (tu,tv) == (union[1], v) or (tu,tv) == (v,union[1]):
+                        count = count + 1
+                        print((u, v), "==", (union[1], v), "///", (u, v), "==", (v, union[1]))
+                    if count==2:
+                        print("사이클임")
+            else : # 교차점이 1개
+                u, v, weight = T[len(T) - 1]
+                count = 0
+                print("@@", (u, v))
+                for t_list in T:
+                    tu,tv,tweight=t_list
+                    if (tu,tv) == (union[0], u) or (tu,tv) == (u,union[0]):
+                        count = count + 1
+                        print((tu,tv),"==",(union[0], u),"///",(tu,tv),"==",(u,union[0]))
+                    if (tu,tv) == (union[0], v) or (tu,tv) == (v,union[0]):
+                        count = count + 1
+                        print((tu,tv), "==", (union[0], v), "///", (tu,tv), "==", (v, union[0]))
+                    if count==2:
+                        print("사이클임")
     return
 
 
