@@ -56,109 +56,60 @@ def prim(L):
 
 
     #시작
-    print("\n2222222222222222222222222222222222222:")
-    #while(len(T)<point_count):
 
-    print("L", L)
-    print("D:",D)
-    lines = []
-    for start in D:
-        index=0
-        for list in L:
-            u, v, weight = list
-            if (u == start) or (v == start):
-                lines.append(index)
-            index = index + 1
-    print("lines",lines)
+    while(len(T)<point_count-1):
+        print("\n",len(T),len(T),len(T),len(T),len(T),len(T),len(T),len(T),len(T),len(T))
+        print("L", L)
+        print("D:", D)
+        lines = []
+        for start in D:
+            index = 0
+            for list in L:
+                u, v, weight = list
+                if (u == start) or (v == start):
+                    lines.append(index)
+                index = index + 1
+        print("lines", lines)
 
-    #사이클삭제
-    index=0
-    newlines=lines
-    for line in lines:
-        u,v,weight=L[line]
-        if point_visited[point.index(u)]=="true" and point_visited[point.index(v)]=="true":
-            print(index,u,v,"사이클발생")
-            newlines.pop(index)
-        index=index+1
-    lines=newlines
-
-    # 최소거리 선분찾기
-    line_weight = []
-    for line in lines:
-        u, v, weight = L[line]
-        line_weight.append(weight)
-    print("line_weight",line_weight)
-    u, v, weight = L[lines[line_weight.index(min(line_weight))]]
-    print("최소선분",u,v)
-
-    # 다음 연결점 설정
-    if u in D:
-        D.remove(u)
-        point_weight[point.index(v)] = min(line_weight)
-        D.append(v)
-    elif v in D:
-        D.remove(v)
-        point_weight[point.index(u)] = min(line_weight)
-        D.append(u)
-    print("D:",D)
-    point_visited[point.index(u)] = "true"
-    point_visited[point.index(v)] = "true"
-    L.remove(L[lines[line_weight.index(min(line_weight))]])
-    print(point)
-    print(point_weight)
-    print(point_visited)
-
-
-    print("\n33333333333333333333333333333333333333333333333333:")
-    print("L", L)
-    print("D:", D)
-    lines = []
-    for start in D:
+        # 사이클삭제
         index = 0
-        for list in L:
-            u, v, weight = list
-            if (u == start) or (v == start):
-                lines.append(index)
+        index_list = []
+        for line in lines:
+            u, v, weight = L[line]
+            if point_visited[point.index(u)] == "true" and point_visited[point.index(v)] == "true":
+                index_list.append(index)
             index = index + 1
-    print("lines", lines)
+        for i in reversed(index_list):
+            lines.pop(i)
+        print("cycle del lines", lines)
 
-    # 사이클삭제
-    index = 0
-    for line in lines:
-        u, v, weight = L[line]
-        if point_visited[point.index(u)] == "true" and point_visited[point.index(v)] == "true":
-            print(index, u, v, "사이클발생")
-            lines.pop(index)
-    print(lines)
+        # 최소거리 선분찾기
+        line_weight = []
+        for line in lines:
+            u, v, weight = L[line]
+            line_weight.append(weight)
+        print("line_weight", line_weight)
+        u, v, weight = L[lines[line_weight.index(min(line_weight))]]
+        print("최소선분", u, v)
 
-
-
-    print("lines", lines)
-    # 최소거리 선분찾기
-    line_weight = []
-    for line in lines:
-        u, v, weight = L[line]
-        line_weight.append(weight)
-    print("line_weight", line_weight)
-    u, v, weight = L[lines[line_weight.index(min(line_weight))]]
-    print("최소선분", u, v)
-
-    # 다음 연결점 설정
-    if u in D:
-        D.remove(u)
-        point_weight[point.index(v)] = min(line_weight)
-        D.append(v)
-    elif v in D:
-        D.remove(v)
-        point_weight[point.index(u)] = min(line_weight)
-        D.append(u)
-    print("D:", D)
-    point_visited[point.index(u)] = "true"
-    point_visited[point.index(v)] = "true"
-    L.remove(L[lines[line_weight.index(min(line_weight))]])
-    print(point)
-    print(point_weight)
-    print(point_visited)
+        # 다음 연결점 설정
+        if u in D:
+            D.remove(u)
+            point_weight[point.index(v)] = min(line_weight)
+            D.append(v)
+        elif v in D:
+            D.remove(v)
+            point_weight[point.index(u)] = min(line_weight)
+            D.append(u)
+        print("D:", D)
+        point_visited[point.index(u)] = "true"
+        point_visited[point.index(v)] = "true"
+        T.append(L[lines[line_weight.index(min(line_weight))]])
+        L.remove(L[lines[line_weight.index(min(line_weight))]])
+        print(point)
+        print(point_weight)
+        print(point_visited)
+        print("T",T)
 
 
     return T
