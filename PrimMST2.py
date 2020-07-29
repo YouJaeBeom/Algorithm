@@ -7,7 +7,7 @@ def prim(L):
     p=point[2]
     print("p:",p)
 
-    # weight list,visited list
+    # weight list,visited list reset
     point_weight=[]
     point_visited = []
     for i in range(0,point_count):
@@ -19,6 +19,8 @@ def prim(L):
     print(point_weight)
     print(point_visited)
 
+    D = []
+
     index = 0
     lines = []
     for list in L:
@@ -27,6 +29,7 @@ def prim(L):
             lines.append(index)
         index = index + 1
     print(lines)
+
     # 임의의 점에서 제일 가까운선분 가져오기
     line_weight = []
     for line in lines:
@@ -37,18 +40,129 @@ def prim(L):
     if u == p:
         point_weight[point.index(v)] = min(line_weight)
         point_visited[point.index(v)] = "true"
+        D.append(u)
+        D.append(v)
     elif v == p:
         point_weight[point.index(u)] = min(line_weight)
         point_visited[point.index(u)] = "true"
+        D.append(v)
+        D.append(u)
     print(point)
     print(point_weight)
     print(point_visited)
+
     T.append(L[lines[line_weight.index(min(line_weight))]])
+    L.remove(L[lines[line_weight.index(min(line_weight))]])
+
 
     #시작
-    while(len(T)<point_count):
-        u, v
+    print("\n2222222222222222222222222222222222222:")
+    #while(len(T)<point_count):
+
+    print("L", L)
+    print("D:",D)
+    lines = []
+    for start in D:
+        index=0
+        for list in L:
+            u, v, weight = list
+            if (u == start) or (v == start):
+                lines.append(index)
+            index = index + 1
+    print("lines",lines)
+
+    #사이클삭제
+    index=0
+    newlines=lines
+    for line in lines:
+        u,v,weight=L[line]
+        if point_visited[point.index(u)]=="true" and point_visited[point.index(v)]=="true":
+            print(index,u,v,"사이클발생")
+            newlines.pop(index)
+        index=index+1
+    lines=newlines
+
+    # 최소거리 선분찾기
+    line_weight = []
+    for line in lines:
+        u, v, weight = L[line]
+        line_weight.append(weight)
+    print("line_weight",line_weight)
+    u, v, weight = L[lines[line_weight.index(min(line_weight))]]
+    print("최소선분",u,v)
+
+    # 다음 연결점 설정
+    if u in D:
+        D.remove(u)
+        point_weight[point.index(v)] = min(line_weight)
+        D.append(v)
+    elif v in D:
+        D.remove(v)
+        point_weight[point.index(u)] = min(line_weight)
+        D.append(u)
+    print("D:",D)
+    point_visited[point.index(u)] = "true"
+    point_visited[point.index(v)] = "true"
+    L.remove(L[lines[line_weight.index(min(line_weight))]])
+    print(point)
+    print(point_weight)
+    print(point_visited)
+
+
+    print("\n33333333333333333333333333333333333333333333333333:")
+    print("L", L)
+    print("D:", D)
+    lines = []
+    for start in D:
+        index = 0
+        for list in L:
+            u, v, weight = list
+            if (u == start) or (v == start):
+                lines.append(index)
+            index = index + 1
+    print("lines", lines)
+
+    # 사이클삭제
+    index = 0
+    for line in lines:
+        u, v, weight = L[line]
+        if point_visited[point.index(u)] == "true" and point_visited[point.index(v)] == "true":
+            print(index, u, v, "사이클발생")
+            lines.pop(index)
+    print(lines)
+
+
+
+    print("lines", lines)
+    # 최소거리 선분찾기
+    line_weight = []
+    for line in lines:
+        u, v, weight = L[line]
+        line_weight.append(weight)
+    print("line_weight", line_weight)
+    u, v, weight = L[lines[line_weight.index(min(line_weight))]]
+    print("최소선분", u, v)
+
+    # 다음 연결점 설정
+    if u in D:
+        D.remove(u)
+        point_weight[point.index(v)] = min(line_weight)
+        D.append(v)
+    elif v in D:
+        D.remove(v)
+        point_weight[point.index(u)] = min(line_weight)
+        D.append(u)
+    print("D:", D)
+    point_visited[point.index(u)] = "true"
+    point_visited[point.index(v)] = "true"
+    L.remove(L[lines[line_weight.index(min(line_weight))]])
+    print(point)
+    print(point_weight)
+    print(point_visited)
+
+
     return T
+
 
 def getpoint(L):
     # point갯수 파악
